@@ -21,8 +21,8 @@ async def get_jokes(req):
             )
         res = await asyncio.gather(*tasks1)
         res = [await x.json() for x in res]
-        # res2 = await asyncio.gather(*tasks2)
-        # res2 = [await x.json() for x in res2]
+        res2 = await asyncio.gather(*tasks2)
+        res2 = [await x.json() for x in res2]
     tasks1 = []
     tasks2 = []
     async with aiohttp.ClientSession() as session:
