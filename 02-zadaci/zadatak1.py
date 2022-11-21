@@ -26,13 +26,14 @@ async def get_jokes(req):
     tasks1 = []
     tasks2 = []
     async with aiohttp.ClientSession() as session:
-        for i in range(len(res)):
-            tasks1.append(
+        for i in range(len(res2)):
+            tasks2.append(
                 asyncio.create_task(
-                    session.post("http://127.0.0.1:8080/filterUser", json=res[i])
+                    session.post("http://127.0.0.1:8080/filterUser", json=res2[i])
                 )
             )
-            tasks2.append(
+        for i in range(len(res)):
+            tasks1.append(
                 asyncio.create_task(
                     session.post("http://127.0.0.1:8080/filterJoke", json=res[i])
                 )
@@ -41,7 +42,6 @@ async def get_jokes(req):
         res = [await x.json() for x in res]
         res2 = await asyncio.gather(*tasks2)
         res2 = [await x.json() for x in res2]
-    print(res)
     return web.json_response({"status": "ok", "messages": res}, status=200)
 
 
